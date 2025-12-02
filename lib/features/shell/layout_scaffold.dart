@@ -1,5 +1,9 @@
+import 'package:boycot/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../core/constants/app_strings.dart';
 
 class LayoutScaffold extends StatelessWidget {
   const LayoutScaffold({
@@ -12,59 +16,69 @@ class LayoutScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true, // позволяет бару быть над контентом
+      extendBody: true,
       body: navigationShell,
 
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+        padding: EdgeInsets.only(
+          bottom: 20.h,
+          left: 20.w,
+          right: 20.w,
+        ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(24.r),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24),
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(24.r),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 20,
-                  spreadRadius: 5,
+                  color: AppColors.primaryGreen.withOpacity(0.15),
+                  blurRadius: 20.r,
+                  spreadRadius: 5.r,
+                  offset: Offset(0, 6.h),
                 ),
               ],
             ),
             child: BottomNavigationBar(
-              backgroundColor: Colors.white,
+              backgroundColor: AppColors.white,
               elevation: 0,
               currentIndex: navigationShell.currentIndex,
 
-              // переход между вкладками
               onTap: (index) {
                 navigationShell.goBranch(
                   index,
-                  initialLocation: index == navigationShell.currentIndex
-                      ? false
-                      : true,
+                  initialLocation: index != navigationShell.currentIndex,
                 );
               },
 
               type: BottomNavigationBarType.fixed,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.list),
-                  label: 'List',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite),
-                  label: 'Support',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.settings),
-                  label: 'Settings',
-                ),
-              ],
+              selectedFontSize: 12.sp,
+              unselectedFontSize: 11.sp,
+              iconSize: 22.sp,
+
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home_outlined, color: Colors.grey),
+                    activeIcon: Icon(Icons.home, color: AppColors.primaryGreen),
+                    label: AppStrings.home,
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.list_outlined, color: Colors.grey),
+                    activeIcon: Icon(Icons.list, color: AppColors.primaryGreen),
+                    label: AppStrings.list,
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.favorite_border, color: Colors.grey),
+                    activeIcon: Icon(Icons.favorite, color: AppColors.primaryGreen),
+                    label: AppStrings.support,
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings_outlined, color: Colors.grey),
+                    activeIcon: Icon(Icons.settings, color: AppColors.primaryGreen),
+                    label: AppStrings.settings,
+                  ),
+                ],
             ),
           ),
         ),
