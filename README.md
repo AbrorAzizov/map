@@ -1,6 +1,6 @@
 # boycot
 
-A new Flutter project.
+app in development using AI detection of produtc in image or camera  then sending data through API to search in database 
 
 ## Getting Started
 
