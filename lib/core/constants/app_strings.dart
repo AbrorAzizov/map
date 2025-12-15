@@ -3,4 +3,5 @@ class AppStrings {
   static const list = "List";
   static const support = "Support";
   static const settings = "Settings";
+  static const main = "Main";
 }

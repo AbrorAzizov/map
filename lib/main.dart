@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app/router.dart';
 import 'core/constants/app_colors.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,11 +26,12 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(
-              seedColor: AppColors.primary,
-              primary: AppColors.primary,
+              seedColor: AppColors.scaffoldBackground,
+              primary: AppColors.primaryGreen,
             ),
           ),
           routerConfig: router,

@@ -1,4 +1,5 @@
 import 'package:boycot/app/routes.dart';
+import 'package:boycot/features/home/presentation/pages/home_tab.dart';
 import 'package:boycot/features/shell/layout_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -22,7 +23,7 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: Routes.homePage,
-              builder: (context, state) => const Center(child: Text('data')),
+              builder: (context, state) => const HomeTab(),
             ),
           ],
         ),
