@@ -1,8 +1,9 @@
 import 'package:boycot/app/routes.dart';
-import 'package:boycot/features/home/presentation/pages/home_tab.dart';
 import 'package:boycot/features/shell/layout_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../features/companies/presentation/pages/home_tab.dart' show HomeTab;
 
 // Import the missing ProfilePage
 // Replace with your actual import path
