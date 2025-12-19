@@ -1,17 +1,12 @@
+import 'package:boycot/injection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app/router.dart';
 import 'core/constants/app_colors.dart';
 
 void main() {
   runApp(
-    MultiBlocProvider(
-      providers: [
-
-      ],
-      child: const MyApp(),
-    ),
+    Injection(child: const MyApp())
   );
 }
 

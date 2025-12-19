@@ -1,61 +1,133 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
-import '../../../../core/constants/app_text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/constants/app_text_styles.dart';
+import '../../presentation/bloc/companies_bloc.dart';
+import '../../presentation/bloc/companies_state.dart';
+import '../../presentation/bloc/companies_event.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
 
-  Future<File?> pickImage() async {
-    final picker = ImagePicker();
-    final picked = await picker.pickImage(
-      source: ImageSource.camera,
-      maxWidth: 1024,
-      maxHeight: 1024,
-      imageQuality: 70,
-    ); if (picked == null) return null;
-    return File(picked.path);
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 20.h),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20.h),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Main', style: AppTextStyles.screenTitle),
-              Row(
-                children: [
-
-
-
-                ],
-              ),
-            ],
-          ),
-
-          SizedBox(height: 40.h),
-
-          // 💥 FAB заменяем обычной кнопкой внутри вкладки
-          Padding(
-            padding: const EdgeInsets.only(bottom: 124.0),
-            child: FloatingActionButton(
-              onPressed: () async {
-                final file = await pickImage();
-                if (file == null) return;
-
-              },
-              child: const Icon(Icons.camera_alt),
+            /// Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Main', style: AppTextStyles.screenTitle),
+                Icon(Icons.notifications_none, size: 24.sp),
+              ],
             ),
-          ),
-        ],
+
+            SizedBox(height: 24.h),
+
+            /// Search
+            TextField(
+              onSubmitted: (value) {
+                if (value.isNotEmpty) {
+                  context
+                      .read<CompaniesBloc>()
+                      .add(SearchCompaniesEvent(value));
+                }
+              },
+              decoration: InputDecoration(
+                hintText: 'Search brands',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 24.h),
+
+            /// Content
+            Expanded(
+              child: BlocBuilder<CompaniesBloc, CompaniesState>(
+                builder: (context, state) {
+                  if (state is CompaniesLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (state is CompaniesLoaded) {
+                    if (state.companies.isEmpty) {
+                      return const Center(
+                        child: Text('No companies found'),
+                      );
+                    }
+
+                    return ListView.separated(
+                      itemCount: state.companies.length,
+                      separatorBuilder: (_, __) =>
+                          SizedBox(height: 12.h),
+                      itemBuilder: (context, index) {
+                        final company = state.companies[index];
+
+                        return Container(
+                          padding: EdgeInsets.all(16.w),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16.r),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 8,
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                company.name,
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(height: 6.h),
+                              Text(
+                                company.description,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 13.sp,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }
+
+                  if (state is CompaniesError) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  }
+
+                  return const Center(
+                    child: Text('Start searching'),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
