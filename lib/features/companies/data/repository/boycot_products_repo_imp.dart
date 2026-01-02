@@ -24,7 +24,10 @@ class BoycotProductsRepoImp implements BoycotProductsRepo {
 
   @override
   Future<List<BrandEntity>> searchCompanies(String query) async {
-    final response = await dio.get('/search/$query');
+    final response = await dio.get('/search/$query',query: {
+      'limit': 6,
+      'offset': 0,
+    });
 
     final List data = response.data['data'];
 

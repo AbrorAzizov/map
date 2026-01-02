@@ -36,7 +36,8 @@ class CompaniesBloc extends Bloc<CompaniesEvent, CompaniesState> {
 
     try {
       final companies = await repository.getCompanies(offset:  event.offset);
-      emit(CompaniesLoaded(companies: companies,currentOffset: event.offset));
+      final newOffset = event.offset + 4;
+      emit(CompaniesLoaded(companies: companies,currentOffset:  newOffset));
     } catch (e) {
       emit(CompaniesError(e.toString()));
     }
