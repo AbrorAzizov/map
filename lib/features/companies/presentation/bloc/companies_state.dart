@@ -8,8 +8,8 @@ class CompaniesLoading extends CompaniesState {}
 
 class CompaniesLoaded extends CompaniesState {
   final List<BrandEntity> companies;
-
-  CompaniesLoaded(this.companies);
+  final int? currentOffset ;
+  CompaniesLoaded({required this.companies, this.currentOffset});
 }
 
 class CompaniesError extends CompaniesState {

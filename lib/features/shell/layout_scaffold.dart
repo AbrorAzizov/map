@@ -33,7 +33,7 @@ class LayoutScaffold extends StatelessWidget {
               borderRadius: BorderRadius.circular(24.r),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withOpacity(0.4),
+                  color: AppColors.primary,
                   blurRadius: 20.r,
                   spreadRadius: 5.r,
                   offset: Offset(0, 6.h),

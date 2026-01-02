@@ -14,8 +14,8 @@ class AlternativeModel extends AlternativeEntity {
     return AlternativeModel(
       id: json['id'],
       name: json['name'],
-      description: json['description'],
-      website: json['website'],
+      description: json['description'] ?? '',
+      website: json['website'] ?? '',
       logo: LogoModel.fromJson(json['logo']),
     );
   }

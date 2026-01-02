@@ -20,7 +20,7 @@ class BrandModel extends BrandEntity {
     return BrandModel(
       id: json['id'],
       name: json['name'],
-      description: json['description'],
+      description: json['description'] ?? '',
       type: json['type'],
       logo: LogoModel.fromJson(json['logo']),
       categories: (json['categories'] as List)

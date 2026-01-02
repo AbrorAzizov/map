@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-
 import '../../../../core/config/api_config.dart';
 
 class DioService {
@@ -24,11 +23,10 @@ class DioService {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          // здесь можно добавить token
+          //здесь можно добавить token
           return handler.next(options);
         },
         onError: (error, handler) {
-          print('HTTP ERROR: ${error.message}');
           return handler.next(error);
         },
       ),

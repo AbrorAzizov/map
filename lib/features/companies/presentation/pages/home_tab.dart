@@ -70,7 +70,7 @@ class HomeTab extends StatelessWidget {
 
                     return ListView.separated(
                       itemCount: state.companies.length,
-                      separatorBuilder: (_, __) =>
+                      separatorBuilder: (_, _) =>
                           SizedBox(height: 12.h),
                       itemBuilder: (context, index) {
                         final company = state.companies[index];

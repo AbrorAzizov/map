@@ -9,8 +9,11 @@ class BoycotProductsRepoImp implements BoycotProductsRepo {
   BoycotProductsRepoImp({required this.dio});
 
   @override
-  Future<List<BrandEntity>> getCompanies() async {
-    final response = await dio.get('/user');
+  Future<List<BrandEntity>> getCompanies({required int offset}) async {
+    final response = await dio.get('/companies',query:{
+      'limit': 4,
+      'offset': offset,
+    });
 
     final List data = response.data['data'];
 
